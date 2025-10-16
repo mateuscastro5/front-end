@@ -7,8 +7,13 @@ export interface PropostaType {
   carro: {
     id: number;
     modelo: string;
-    marca: string;
+    marca: {
+      id: number;
+      nome: string;
+    };
     ano: number;
+    preco: number;
+    foto: string;
   };
   resposta?: string;
   createdAt: string;
