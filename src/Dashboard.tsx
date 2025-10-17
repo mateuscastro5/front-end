@@ -97,6 +97,9 @@ export default function Dashboard() {
     y: Number(item.total)
   }))
 
+  // Calcular max para o gráfico
+  const maxInteracoes = Math.max(...dadosInteracoesPorDia.map(d => d.y), 10)
+
   return (
     <div className="max-w-7xl mx-auto p-4">
       {/* Header */}
@@ -230,19 +233,32 @@ export default function Dashboard() {
           <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
             📈 Interações nos Últimos 7 Dias
           </h2>
-          <VictoryChart theme={VictoryTheme.material}>
+          <VictoryChart
+            theme={VictoryTheme.material}
+            height={300}
+            padding={{ top: 40, bottom: 60, left: 60, right: 40 }}
+            domain={{ y: [0, maxInteracoes + 5] }}
+          >
             <VictoryAxis
+              style={{
+                tickLabels: { fontSize: 12, angle: 0 }
+              }}
+            />
+            <VictoryAxis
+              dependentAxis
               style={{
                 tickLabels: { fontSize: 12 }
               }}
             />
-            <VictoryAxis dependentAxis />
             <VictoryLine
               data={dadosInteracoesPorDia}
               style={{
-                data: { stroke: "#8b5cf6", strokeWidth: 3 },
-                parent: { border: "1px solid #ccc" }
+                data: { 
+                  stroke: "#3b82f6",
+                  strokeWidth: 3
+                }
               }}
+              interpolation="monotoneX"
             />
           </VictoryChart>
         </div>
